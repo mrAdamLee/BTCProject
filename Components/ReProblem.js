@@ -1,37 +1,54 @@
 import React, {Component } from 'react';
-import { ScrollView, StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { ScrollView, TouchableHighlight, AlertIOS, StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Fumi } from 'react-native-textinput-effects';
-import {db} from '../src/config';
 
-let addItem = item => {
-    db.ref().push({
-        name
+import { removeProperties } from '@babel/types';
+import {addItem} from '../src/services/addItem';
 
-    });
-};
+//function writeUserData()
 
 export default class ReProblem extends Component {
-    state = {
-        name: ''
-    };
-    handleChange = textValue => {
+    constructor(props){
+        super(props);
+        this.state= {
+            name: '',
+            PhoneNumber: '',
+            Problem: ''
+         }
+         this.handleChange=this.handleChange.bind(this);
+         this.handelChangePhone=this.handelChangePhone.bind(this);
+         this.handleChangeProblem=this.handleChangeProblem.bind(this);
+         this.handleSubmit= this.handleSubmit.bind(this);
+    }
+
+    handleChange(e) {
         this.setState({
-         name: textValue
+         name: e.nativeEvent.text,
+         //PhoneNumber: e.nativeEvent.text,
+         //Problem: e.nativeEvent.text 
+
+        });
+  
+    };
+    handelChangePhone(e){
+        this.setState({
+            PhoneNumber: e.nativeEvent.text
         });
     };
+    handleChangeProblem(e){
+        this.setState({
+            Problem: e.nativeEvent.text
+        });
+    };
+ 
     handleSubmit = () =>{
-        addItem(this.state.name);
+        addItem(this.state.name, this.state.PhoneNumber, this.state.Problem);
+ 
     };
     render (){
         return(
-          /*  <View>
-
-
-            </View>
-        );
-    }
-}*/
+          
             <View style={[styles.card2, { flex: 1, backgroundColor: '#2471a3' }]}>
             <Text style={styles.title}>Report A Problem</Text>
             <Fumi
@@ -46,7 +63,8 @@ export default class ReProblem extends Component {
               //onChangeText={(text)} => {this.handleChange}
             />
             <Fumi
-              onChange={(this.handleChange)}
+              
+              onChange={(this.handelChangePhone)}
               style={styles.input}
               label={'Phone Number'}
               iconClass={FontAwesomeIcon}
@@ -54,7 +72,7 @@ export default class ReProblem extends Component {
               iconColor={'#77116a'}
             />
             <Fumi
-                onChange={(this.handleChange)}
+                onChange={(this.handleChangeProblem)}
                 style={styles.input2}
                 label={'Describe the Problem'}
                 iconClass={FontAwesomeIcon}
