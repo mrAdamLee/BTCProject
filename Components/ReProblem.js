@@ -14,12 +14,15 @@ export default class ReProblem extends Component {
         this.state= {
             name: '',
             PhoneNumber: '',
+            Address: '',
             Problem: ''
          }
          this.handleChange=this.handleChange.bind(this);
          this.handelChangePhone=this.handelChangePhone.bind(this);
+         this.handleChangeAddr=this.handleChangeAddr.bind(this);
          this.handleChangeProblem=this.handleChangeProblem.bind(this);
          this.handleSubmit= this.handleSubmit.bind(this);
+         
     }
 
     handleChange(e) {
@@ -41,9 +44,14 @@ export default class ReProblem extends Component {
             Problem: e.nativeEvent.text
         });
     };
+    handleChangeAddr(e){
+        this.setState({
+            Address: e.nativeEvent.text
+        })
+    }
  
     handleSubmit = () =>{
-        addItem(this.state.name, this.state.PhoneNumber, this.state.Problem);
+        addItem(this.state.name, this.state.PhoneNumber, this.state.Address, this.state.Problem);
  
     };
     render (){
@@ -54,7 +62,7 @@ export default class ReProblem extends Component {
             <Fumi
               onChange={(this.handleChange)}
               label={'Name'}
-              labelStyle={{ color: '#a3a3a3' }}
+              
               inputStyle={{ color: '#f95a25' }}
               iconClass={FontAwesomeIcon}
               iconName={'user'}
@@ -69,9 +77,18 @@ export default class ReProblem extends Component {
               label={'Phone Number'}
               iconClass={FontAwesomeIcon}
               iconName={'phone'}
-              iconColor={'#77116a'}
+              iconColor={'#f95a25'}
             />
-            <Fumi
+              <Fumi
+            onChange={(this.handleChangeAddr)}
+            style={styles.input3}
+            label={'E911 Address'}
+            iconClass={FontAwesomeIcon}
+            iconName={'map-marker'}
+            iconColor={'#f95a25'}            
+            
+            />
+           <Fumi
                 onChange={(this.handleChangeProblem)}
                 style={styles.input2}
                 label={'Describe the Problem'}
@@ -79,6 +96,7 @@ export default class ReProblem extends Component {
                 iconName={'exclamation-triangle'}
                 iconColor={'#f95a25'}
             />
+             
             <Button
                 onPress={this.handleSubmit} 
                 title="Submit"
@@ -108,6 +126,9 @@ const styles = StyleSheet.create({
       marginTop: 4,
     },
     input2: {
+        marginTop: 4,
+    },
+    input3: {
         marginTop: 4,
     },
     title: {
