@@ -1,3 +1,4 @@
+
 import React, {Component } from 'react';
 import { ScrollView, TouchableHighlight, AlertIOS, StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     title: {
+      paddingTop: 200,
       paddingBottom: 16,
       textAlign: 'center',
       color: '#000000',

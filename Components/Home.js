@@ -1,14 +1,36 @@
-import React, {Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+/*import React, {Component } from 'react';
 
+
+import { FacebookProvider, Page } from 'react-facebook';
+//import {createBottomTabNavigator, createAppContainer} from 'react-navigation';
 export default class Home extends React.Component {
 
 
   render(){
-      const { navigate } = this.props.navigation
-  return (
-    <View style={styles.container}>
+    
+      //const { navigate } = this.props.navigation
      
+  return (
+     
+       
+   
+    <FacebookProvider appId="2319566588264121">
+      <Page href="https://www.facebook.com/BledsoeTelephoneCooperative/" tabs="timeline" />
+    </FacebookProvider> 
+
+     
+    /*
+    <View style={styles.container}>
+    <div className="centerContent">
+      <div className="selfCenter standardWidth">
+        <TwitterTimelineEmbed
+          sourceType="profile"
+            screenName="saurabhnemade"
+            options={{height: 400}}
+            onComplete={action}
+        />
+      </div>
+    </div>
 
      <Button title="Report A Problem"
         color="#ffffff"
@@ -19,15 +41,80 @@ export default class Home extends React.Component {
     </View>
   );
   }
+}*/
+import React from "react"
+import ReactNative from "react-native"
+
+const { View, WebView, StyleSheet, ActivityIndicator, Text, Image } = ReactNative
+
+export default class Home extends React.Component {
+render() {
+  let utils = ' \
+    function loadScript(src, callback) { \
+      var s, r, t; \
+      r = false; \
+      s = document.createElement("script"); \
+      s.type = "text/javascript"; \
+      s.src = src; \
+      s.onload = s.onreadystatechange = function() { \
+        if ( !r && (!this.readyState || this.readyState == "complete") ) { \
+          r = true; \
+          callback(); \
+        } \
+      }; \
+      t = document.getElementsByTagName("script")[0]; \
+      t.parentNode.insertBefore(s, t); \
+    } \
+  ';
+
+  let twitter = ' \
+    loadScript("//platform.twitter.com/widgets.js", function () { \
+      twttr.widgets.load(); \
+    }); \
+  ';
+  let JS = '<script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>';
+
+  let source = JS + '<a class="twitter-timeline" href="https://twitter.com/AdamLee_angel?ref_src=twsrc%5Etfw">Tweets by AdamLee_angel</a>'
+ // '<blockquote class="twitter-tweet" data-lang="es"><p lang="en" dir="ltr">8 TED Talks to inspire projects with kids: <a href="https://twitter.com/TEDTalks/status/758116657638309896">https://twitter.com/TEDTalks/status/758116657638309896</a> <a href="https://twitter.com/TEDTalks/status/758116657638309896">pic.twitter.com/HMmYAeP7Km</a></p>&mdash; TED Talks (@TEDTalks) <a href="https://twitter.com/TEDTalks/status/758116657638309896">27 de julio de 2016</a></blockquote>';
+//<a class="twitter-timeline" href="https://twitter.com/AdamLee_angel?ref_src=twsrc%5Etfw">Tweets by AdamLee_angel</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  return (
+    
+    <View style={styles.container}>
+      <View style={styles.header}> 
+        <Image 
+          source={require('../assets/btcfiber_logo_app.png')}
+          style={styles.image}
+          
+        />
+        
+      </View>
+      <WebView
+        source={{html: source}}
+        javaScriptEnabled={true}
+        style={styles.twitter}
+      />
+    </View>
+
+  );
 }
-
-
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 100,
-    backgroundColor: '#2471a3',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
   },
-});
+  header: {
+    flex: 0.15,
+    backgroundColor:'#2471a3',
+  },
+  twitter: {
+    flex: 1,
+  },
+  image: {
+    flex:1,
+    paddingTop: 120,
+    width: null, 
+    height: null, 
+    resizeMode: 'contain'
+  }
+
+})
