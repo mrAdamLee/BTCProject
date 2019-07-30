@@ -18,13 +18,14 @@ import { Text, View } from 'react-native';
 import ReProblem from './Components/ReProblem';
 import Home from './Components/Home';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import OneSignal from 'react-native-onesignal';
 
-
+const title1='Report A Problem';
 
 const TabNavigator = createBottomTabNavigator({
   
   Home: Home,
-  ReProblem: ReProblem
+  Issues: ReProblem
 });
 
 export default createAppContainer(TabNavigator);

@@ -44,10 +44,40 @@ export default class Home extends React.Component {
 }*/
 import React from "react"
 import ReactNative from "react-native"
+import OneSignal from 'react-native-onesignal';
 
 const { View, WebView, StyleSheet, ActivityIndicator, Text, Image } = ReactNative
 
 export default class Home extends React.Component {
+  constructor(properties) {
+    super(properties);
+    OneSignal.init("75a26dec-2664-4bcb-9426-6035347cd8a7");
+    OneSignal.addEventListener('received', this.onReceived);
+    OneSignal.addEventListener('opened', this.onOpened);
+    OneSignal.addEventListener('ids', this.onIds);
+    OneSignal.configure(); 	// triggers the ids event
+  }
+
+  componentWillUnmount() {
+    OneSignal.removeEventListener('received', this.onReceived);
+    OneSignal.removeEventListener('opened', this.onOpened);
+    OneSignal.removeEventListener('ids', this.onIds);
+  }
+
+  onReceived(notification) {
+    console.log("Notification received: ", notification);
+  }
+
+  onOpened(openResult) {
+    console.log('Message: ', openResult.notification.payload.body);
+    console.log('Data: ', openResult.notification.payload.additionalData);
+    console.log('isActive: ', openResult.notification.isAppInFocus);
+    console.log('openResult: ', openResult);
+  }
+
+  onIds(device) {
+    console.log('Device info: ', device);
+  }
 render() {
   let utils = ' \
     function loadScript(src, callback) { \
@@ -74,8 +104,9 @@ render() {
   ';
   let JS = '<script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>';
 
-  let source = JS + '<a class="twitter-timeline" href="https://twitter.com/AdamLee_angel?ref_src=twsrc%5Etfw">Tweets by AdamLee_angel</a>'
- // '<blockquote class="twitter-tweet" data-lang="es"><p lang="en" dir="ltr">8 TED Talks to inspire projects with kids: <a href="https://twitter.com/TEDTalks/status/758116657638309896">https://twitter.com/TEDTalks/status/758116657638309896</a> <a href="https://twitter.com/TEDTalks/status/758116657638309896">pic.twitter.com/HMmYAeP7Km</a></p>&mdash; TED Talks (@TEDTalks) <a href="https://twitter.com/TEDTalks/status/758116657638309896">27 de julio de 2016</a></blockquote>';
+  let source = JS + '<a class="twitter-timeline" href="https://twitter.com/BtcFiber?ref_src=twsrc%5Etfw">Tweets by BtcFiber</a>'
+  
+  // '<blockquote class="twitter-tweet" data-lang="es"><p lang="en" dir="ltr">8 TED Talks to inspire projects with kids: <a href="https://twitter.com/TEDTalks/status/758116657638309896">https://twitter.com/TEDTalks/status/758116657638309896</a> <a href="https://twitter.com/TEDTalks/status/758116657638309896">pic.twitter.com/HMmYAeP7Km</a></p>&mdash; TED Talks (@TEDTalks) <a href="https://twitter.com/TEDTalks/status/758116657638309896">27 de julio de 2016</a></blockquote>';
 //<a class="twitter-timeline" href="https://twitter.com/AdamLee_angel?ref_src=twsrc%5Etfw">Tweets by AdamLee_angel</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   return (
     
